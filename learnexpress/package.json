@@ -4,6 +4,7 @@
   "description": "learn to build REST API",
   "main": "index.js",
   "dependencies": {
+    "body-parser": "^1.13.2",
     "express": "^4.13.1",
     "usergrid": "^0.10.9"
   },

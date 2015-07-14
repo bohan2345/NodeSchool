@@ -5,27 +5,23 @@ var client = new usergrid.client({
     appName: 'sandbox'
 });
 
-function create(data) {
+function create(data, callback) {
     var options = {
         type: data.type,
         name: data.name
     };
+    
     client.createEntity(options, function(err, dog) {
         if (err) {
             console.log(err);
+            callback(err);
         } else {
-            console.log('entity created!');
+            dog.set(data);
+
+            dog.save(function(err) {
+                callback(err);
+            });
         }
-
-        dog.set(data);
-
-        dog.save(function(err) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log('entity saved!');
-            }
-        });
     });
 }
 
@@ -42,13 +38,21 @@ function fetch(type, name, callback) {
         if (err) {
             console.log(err);
         } else {
-            callback(data);
+            callback(err, data);
         }
     });
 }
 
 function destory(name) {
 
+}
+
+function errorLogHelper(errorMsg, successMsg) {
+    if (err) {
+        console.log(errorMsg);
+    } else {
+        console.log(successMsg);
+    }
 }
 
 module.exports = {
