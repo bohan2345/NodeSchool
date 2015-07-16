@@ -1,17 +1,13 @@
 function create(err, data) {
-    var result = {};
+    var result = {
+        data: data
+    };
     if (err) {
-        result = {
-            status: 'ERROR',
-            message: err,
-            data: data
-        }
+        result.status = 'ERROR';
+        result.message = err;
     } else {
-        result = {
-            status: 'SUCCESS',
-            message: 'success!',
-            data: data
-        }
+        result.status = 'SUCCESS';
+        result.message = 'success!';
     }
     console.log(result);
     return result;
