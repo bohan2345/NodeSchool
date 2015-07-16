@@ -1,16 +1,46 @@
-var usergrid = require('usergrid');
+var Usergrid = require('usergrid');
+var Logger = require('./logger.js');
 
-var client = new usergrid.client({
+var client = new Usergrid.client({
     orgName: 'bohan2345',
     appName: 'sandbox'
 });
+
+var options = {
+    type: 'items',
+    client: client
+};
+
+function getItems(args, callback) {
+    var collection = new Usergrid.collection(options);
+    collection.fetch(function(err, result) {
+        if (err) {
+            Logger.logError(err);
+            callback(err, result);
+        } else {
+            callback(err, result.entities);
+        }
+    });
+}
+
+function saveItem(args, callback) {
+	args.type = 'items';
+	client.createEntity(args, function(err, result) {
+		if (err) {
+			Logger.logError(err);
+            callback(err, result);
+		} else {
+			callback(err, result._data);
+		}
+	});
+}
 
 function create(data, callback) {
     var options = {
         type: data.type,
         name: data.name
     };
-    
+
     client.createEntity(options, function(err, dog) {
         if (err) {
             console.log(err);
@@ -47,17 +77,15 @@ function destory(name) {
 
 }
 
-function errorLogHelper(errorMsg, successMsg) {
-    if (err) {
-        console.log(errorMsg);
-    } else {
-        console.log(successMsg);
-    }
-}
-
 module.exports = {
     'create': create,
     'update': update,
     'fetch': fetch,
-    'destory': destory
+    'destory': destory,
+    'getItems': function(args, callback) {
+        getItems(args, callback);
+    },
+    'saveItem': function(args, callback) {
+    	saveItem(args, callback);
+    }
 };

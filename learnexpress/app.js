@@ -5,37 +5,66 @@ var resultFactory = require('./result_factory.js');
 
 var app = express();
 
-app.use(bodyParser.json()); // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
+app.use(bodyParser.json());
+// to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({// to support URL-encoded bodies
     extended: true
 }));
 
-app.get('/', function(req, res) {
-    console.log(req.query);
-    var type = req.query.type;
-    var name = req.query.name;
-    apigee.fetch(type, name, function(err, data) {
-        var result = resultFactory.create(err, data);
-        res.json(result);
+//set common response header
+app.use(function(req, res, next) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    next('route');
+});
+
+//config port
+var port = process.env.PORT || 3000;
+
+//Router level middleware
+var router = express.Router();
+
+router.route('/items').get(function(req, res) {
+    //get a list of items
+    apigee.getItems({}, function(err, result) {
+        res.json(resultFactory.create(err, result));
+    });
+}).post(function(req, res) {
+    //add a new item
+    var data = req.body;
+    
+    apigee.saveItem(data, function(err, result) {
+        res.json(resultFactory.create(err, result));
     });
 });
 
-app.post('/', function(req, res) {
-    res.setHeader("Access-Control-Allow-Origin", "*");
+router.route('/items/:itemType').get(function(req, res) {
+    //get a list items for a certain type
+}).post(function(req, res) {
+    //add a new item to a certain type
     var data = req.body;
-    console.log(data);
+    data.itemType = req.params.itemType;
     apigee.create(data, function(err) {
         var result = resultFactory.create(err);
-        console.log(result);
         res.json(result);
     });
 });
 
-app.put('/', function(req, res) {
+router.route('/item/:id').get(function(req, res) {
+    //get an item by id
+}).put(function(req, res) {
+    //update an item by id
+}).delete(function(req, res) {
+    //delete an item by id
+});
+
+app.use('/myapi', router);
+
+//Error handling middleware
+router.use(function(err, req, res, next) {
 
 });
 
-var server = app.listen(3000, function() {
+var server = app.listen(port, function() {
     var host = server.address().address;
     var port = server.address().port;
     console.log('Example app listening at http://%s:%s', host, port);

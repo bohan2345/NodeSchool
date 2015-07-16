@@ -1,28 +1,38 @@
 <html>
-<head>
-<title>index</title>
-<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script>
-    $().ready(function() {
-        $('button').click(function() {
-            $.ajax({
-                method: 'POST',
-                url: 'http://127.0.0.1:3000/',
-                data: $('form').serialize(),
-                success: function(data) {
-                    console.log(data);
-                }
+	<head>
+		<title>index</title>
+		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script>
+            $().ready(function() {
+                $('button').click(function() {
+                    $.ajax({
+                        method: 'POST',
+                        url: 'http://127.0.0.1:3000/myapi/items',
+                        data: $('form').serialize(),
+                        success: function(data) {
+                            console.log(data);
+                        }
+                    });
+                });
             });
-        });
-    });
-</script>
-</head>
-<body>
-	<form method="post">
-		type:<input type="text" name="type"><br> name:<input
-			type="text" name="name"><br> master:<input type="text"
-			name="master"><br>
-	</form>
-	<button>submit</button>
-</body>
+		</script>
+	</head>
+	<body>
+		<form method="post">
+			type:
+			<input type="text" name="itemType">
+			<br>
+			name:
+			<input
+			type="text" name="name">
+			<br>
+			master:
+			<input type="text"
+			name="master">
+			<br>
+		</form>
+		<button>
+			submit
+		</button>
+	</body>
 </html>

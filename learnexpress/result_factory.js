@@ -15,6 +15,6 @@ function create(err, data) {
 
 module.exports = {
     create: function(err, data) {
-        create(err, data);
+        return create(err, data);
     }
-};
+}; 
