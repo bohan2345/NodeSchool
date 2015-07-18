@@ -5,9 +5,10 @@
 		<script>
             $().ready(function() {
                 $('button').click(function() {
+                	console.log($('form').serialize());
                     $.ajax({
-                        method: 'POST',
-                        url: 'http://127.0.0.1:3000/myapi/items',
+                        method: 'PUT',
+                        url: 'http://127.0.0.1:3000/myapi/item/11e44dfa-2cd1-11e5-9a4b-71f1809cdda3',
                         data: $('form').serialize(),
                         success: function(data) {
                             console.log(data);
@@ -18,7 +19,7 @@
 		</script>
 	</head>
 	<body>
-		<form method="post">
+		<form>
 			type:
 			<input type="text" name="itemType">
 			<br>

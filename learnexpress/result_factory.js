@@ -4,10 +4,12 @@ function create(err, data) {
     };
     if (err) {
         result.status = 'ERROR';
-        result.message = err;
+        result.message = 'Action failed!';
+        result.has_error = err;
     } else {
         result.status = 'SUCCESS';
-        result.message = 'success!';
+        result.message = 'Action success!';
+        result.has_error = err;
     }
     console.log(result);
     return result;
@@ -17,4 +19,4 @@ module.exports = {
     create: function(err, data) {
         return create(err, data);
     }
-}; 
+};

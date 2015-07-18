@@ -6,12 +6,11 @@ var client = new Usergrid.client({
     appName: 'sandbox'
 });
 
-var options = {
-    type: 'items',
-    client: client
-};
-
 function getItems(args, callback) {
+	var options = {
+	    type: 'items',
+	    client: client
+	};
     var collection = new Usergrid.collection(options);
     collection.fetch(function(err, result) {
         if (err) {
@@ -31,6 +30,46 @@ function saveItem(args, callback) {
             callback(err, result);
 		} else {
 			callback(err, result._data);
+		}
+	});
+}
+
+function updateItem(args, callback) {
+	args.type = 'items';
+	var properties = {
+		client: client,
+		data: args
+	};
+	
+	var entity = new Usergrid.entity(properties);
+	
+	entity.save(function(err, result) {
+		if (err) {
+			Logger.logError(err);
+            callback(err, result);
+		} else {
+			callback(err, result.entities[0]);
+		}
+	});
+}
+
+function deleteItem(args, callback) {
+	var properties = {
+		client: client,
+		data: {
+			'type': 'items',
+			'uuid': args['uuid']
+		}
+	};
+	
+	var entity = new Usergrid.entity(properties);
+	
+	entity.destroy(function(err, result) {
+		if (err) {
+			Logger.logError(err);
+			callback(err, result);
+		} else {
+			callback(err, result.entities[0]);
 		}
 	});
 }
@@ -87,5 +126,11 @@ module.exports = {
     },
     'saveItem': function(args, callback) {
     	saveItem(args, callback);
+    },
+    'deleteItem': function(args, callback) {
+    	deleteItem(args, callback);
+    },
+    'updateItem': function(args, callback) {
+    	updateItem(args, callback);
     }
 };
