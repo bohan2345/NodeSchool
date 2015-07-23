@@ -1,17 +1,17 @@
 {
-  "name": "learnexpree",
-  "version": "0.0.0",
-  "description": "learn to build REST API",
-  "main": "index.js",
-  "dependencies": {
-    "body-parser": "^1.13.2",
-    "express": "^4.13.1",
-    "usergrid": "^0.10.9"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Bohan",
-  "license": "ISC"
+	"name": "learnexpree",
+	"version": "0.0.0",
+	"description": "learn to build REST API",
+	"main": "app.js",
+	"dependencies": {
+		"body-parser": "^1.13.2",
+		"express": "^4.13.1",
+		"usergrid": "^0.10.9"
+	},
+	"devDependencies": {},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Bohan",
+	"license": "ISC"
 }

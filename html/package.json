@@ -1,0 +1,15 @@
+{
+  "name": "html",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {
+    "angular": "^1.4.3",
+    "bootstrap": "^3.3.5",
+    "jquery": "^2.1.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bohan Zheng",
+  "license": "ISC"
+}
